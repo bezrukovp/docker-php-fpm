@@ -87,8 +87,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
 
 RUN apk add --no-cache msmtp && \
     mkdir -p /var/log/msmtp && \
-    chown www-data:adm /var/log/msmtp && \
-    mkdir -p /var/log/msmtp && \
     chown www-data:adm /var/log/msmtp
 
 ADD ./msmtprc /etc/msmtprc
@@ -101,4 +99,4 @@ ADD ./msmtprc /etc/msmtprc
 #
 
 # Clean up
-RUN rm -rf /tmp/* /var/cache/apk/* /usr/src/*
+RUN rm -rf /tmp/* /var/cache/apk/*
