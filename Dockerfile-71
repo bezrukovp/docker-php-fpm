@@ -76,9 +76,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     && docker-php-ext-enable apcu \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
-    && curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin \
-    && docker-php-source delete \
-    && apk del .build-deps
+    && curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 
 
 #####################################
