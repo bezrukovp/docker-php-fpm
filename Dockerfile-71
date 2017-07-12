@@ -59,9 +59,14 @@ RUN apk add --no-cache --virtual .persistent-deps \
         mysqli \
         soap \
         zip \
-    && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached/ \
+    # memcached
+    && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached/ /usr/src/php/ext/memcached/ \
     && docker-php-ext-configure memcached --disable-memcached-sasl \
     && docker-php-ext-install memcached \
+    # memcache
+    && git clone --branch php7 https://github.com/websupport-sk/pecl-memcache/ /usr/src/php/ext/memcache/ \
+    && docker-php-ext-configure memcache \
+    && docker-php-ext-install memcache \
     && docker-php-ext-configure curl \
     && docker-php-ext-install curl \
     && docker-php-ext-configure opcache --enable-opcache \
