@@ -21,6 +21,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
         libmemcached \
         curl \
         libcurl \
+        ssmtp \
         freetype-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
@@ -80,14 +81,10 @@ RUN apk add --no-cache --virtual .persistent-deps \
 
 
 #####################################
-# Set msmtp
+# Set ssmtp
 #####################################
 
-RUN apk add --no-cache msmtp && \
-    mkdir -p /var/log/msmtp && \
-    chown www-data:adm /var/log/msmtp
-
-ADD ./msmtprc /etc/msmtprc
+ADD ./ssmtp/ /etc/ssmtp/
 
 
 #
