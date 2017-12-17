@@ -4,6 +4,8 @@ MAINTAINER Pavel Bezrukov <bezrukov.ps@gmail.com>
 
 ENV TERM xterm
 
+ENV JPEGOPTIM_VERSION=1.4.4
+ENV OPTIPNG_VERSION=0.7.6
 
 #
 #--------------------------------------------------------------------------
@@ -83,6 +85,29 @@ RUN apk add --no-cache --virtual .persistent-deps \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
+
+
+#####################################
+# Image compression:
+#####################################
+
+#jpegoptim
+RUN apk add --no-cache --virtual .build-dependencies-jpegoptim libjpeg-turbo-dev \
+    && mkdir /usr/src/jpegoptim \
+    && cd /usr/src/jpegoptim \
+    && git clone -b RELEASE.${JPEGOPTIM_VERSION} https://github.com/tjko/jpegoptim.git . \
+    && ./configure && make && make strip && make install \
+    && cd / \
+    && apk del .build-dependencies-jpegoptim \
+    && rm -rf /usr/src/jpegoptim
+
+#optipng
+RUN mkdir -p /usr/src/optipng \
+    && wget -O - http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${OPTIPNG_VERSION}/optipng-${OPTIPNG_VERSION}.tar.gz | tar xz -C /usr/src/optipng --strip-components=1 \
+    && cd /usr/src/optipng \
+    && ./configure && make && make install \
+    && cd / \
+    && rm -rf /usr/src/optipng
 
 
 #####################################
