@@ -96,7 +96,7 @@ RUN apk add --no-cache --virtual .build-dependencies-jpegoptim libjpeg-turbo-dev
     && mkdir /usr/src/jpegoptim \
     && cd /usr/src/jpegoptim \
     && git clone -b RELEASE.${JPEGOPTIM_VERSION} https://github.com/tjko/jpegoptim.git . \
-    && ./configure && make && make strip && make install \
+    && ./configure --prefix=/usr && make && make strip && make install \
     && cd / \
     && apk del .build-dependencies-jpegoptim \
     && rm -rf /usr/src/jpegoptim
@@ -105,7 +105,7 @@ RUN apk add --no-cache --virtual .build-dependencies-jpegoptim libjpeg-turbo-dev
 RUN mkdir -p /usr/src/optipng \
     && wget -O - http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${OPTIPNG_VERSION}/optipng-${OPTIPNG_VERSION}.tar.gz | tar xz -C /usr/src/optipng --strip-components=1 \
     && cd /usr/src/optipng \
-    && ./configure && make && make install \
+    && ./configure --prefix=/usr && make && make install \
     && cd / \
     && rm -rf /usr/src/optipng
 
